@@ -18,6 +18,7 @@
 }
 
 \usepackage{url}
+\usepackage{hyperref}
 
 \title{\heiti{\LaTeX 总结}}
 \author{\kaishu{北方以北}}
@@ -43,13 +44,24 @@
 
 我学习\LaTeX 完全出于兴趣，而非学习和工作的需要，并且由于以上断断续续的学习，目前我大概还处于初级使用者的水平，远谈不上深入，而且我预计以后的工作中，也会越来越少地使用\LaTeX ，但作为一项基本的书写技能，现在想把以前零碎的笔记做一个系统化的整理，以方便自己以后的使用，同时也希望有利于其他人的学习。
 
+\input{about-Knuth.tex}
+
 \section{\LaTeX 基本语法拾遗}
 \LaTeX 是向后兼容的。
 
+\subsection{引用宏包}
+nag宏包。事实上，如果你的代码没问题，这个宏包将不会做任何事情。注意：把这个宏包放在你的导言区的第一行（甚至在 \verb|\documentclass| 之前）。它将会检测你文档中是否使用已经被淘汰了的宏包以及过时的命令。
+
 \subsection{排版基础}
-在paper开头，必不可少的是会引用LaTeX packages。除了常用的\LaTeX 包，在此需要特别说明的有两个：一是\verb|\usepackage[american]{babel}|，另一个是\verb|\usepackage{microtype}|，引用这两个包会大大提升排版的正式程度和美观程度。其中\verb|\usepackage[american]{babel}|的引用是遇单词换行的时候，确保单词的切割是按照音节来而不是随意切割。这会让作为native speaker的审稿人赏心悦目，心中暗爽。而\verb|\usepackage{microtype}|的最大特点就是能够调整全篇文章（或局部）的字间距，字间距最大调整范围为±1em。可使得某段落不会出现单独一个单词占一行，或文章末尾单独一行文字占一页的不美观情况。\footnote{该包在NIPS中自带引用，而ECCV由于LNCS在排版方面的一些限制因素，不推荐在ECCV中使用该包引用}
+
+
+在paper开头，必不可少的是会引用LaTeX packages。除了常用的\LaTeX 包，在此需要特别说明的有两个：一是\verb|\usepackage[american]{babel}|，另一个是\verb|\usepackage{microtype}|，引用这两个包会大大提升排版的正式程度和美观程度。其中\verb|\usepackage[american]{babel}|的引用是遇单词换行的时候，确保单词的切割是按照音节来而不是随意切割。这会让作为native speaker的审稿人赏心悦目，心中暗爽。而\verb|\usepackage{microtype}|的最大特点就是能够调整全篇文章（或局部）的字间距，字间距最大调整范围为±1em。可使得某段落不会出现单独一个单词占一行，或文章末尾单独一行文字占一页的不美观情况。\footnote{该包在NIPS中自带引用，而ECCV由于LNCS在排版方面的一些限制因素，不推荐在ECCV中使用该包引用}如果有使用到字体宏包，需要将 microtype 宏包放在它们的后面，因为这个宏包对单词、字母的调整和字体是有关的。
 
 在行文过程中若使用括号，括号前一定要有空格与前文内容分开。这也是中文作者很容易忽略的一点。例如，“the boosting algorithm (AdaBoost)” “the clustering algorithm (k-means)”。
+
+siunitx 宏包大大简化了写作科技文的 \TeX 命令，科技文写作中很大一部分是单位、数字。这个宏包添加了一些命令，比如 \verb|\num|命令可以输出我们想要的各种方式的数字形式（比如科学记数法），而 \verb|\si| 命令用来输出单位。我经常用到的命令是 \verb|\SI| 和 \verb|\SIrange|。比如 \verb|\SI{10}{\hertz}| 输出为 “10Hz”（这能有效避免输入错误，我可能会写成 HZ 或者 hz 而不是 Hz）。\verb|\SIrange| 命令多一个参数：\verb|\SIrange{10}{100}{\hertz}| 输出为 “10Hz to 100Hz”。
+
+hyperref 非常强大，你可以有非常多的可能性，其中最突出的特色是超链接。当引用一幅图的时候，引用与图形形成了链接，当你点击引用的地方，它会跳转到链接的图片处。并且 hyperref 可以让你插入 PDF 元数据到你的最终文档中。注意：作为一个经验法则，你应该在导言区的最后加入这个宏包，在所有宏包之后。也存在少数例外的情况：比如，cleveref宏包应该在 hyperref 之后。
 
 单双引号的使用。正确的单引号使用方式：左引号为 (全键盘上数字1左侧键位)，右引号为 ' (分号右侧键位)。双引号则重复输入两次即可（即 ''）。切记不是平常引号的输入方式。
 
@@ -58,6 +70,8 @@
 一些英文简写的用法。“that is”写作“i.e.,”，“for example”写为“e.g.,”，而“参看/参考”简写为“cf.”。注意，前两者有两个“.”且末尾要有“,”而“参考”的简写只有一个“.”。
 
 文中在引用参考文献时要用“\~{}”（而不是直接空格）来产生空格。例如，“state-of-the-art MIL algorithms, e.g., miFV\~{}\verb|\cite{bibmiFV}| and miGraph\~{}\verb|\cite{bibmiGraph}|, and …” 用“\~{}”来产生空格的好处是使得“miFV [5]”作为一个整体，在换行时不会发生“[5]”与前文分开而单独处于行首的错误情况。“\~{}\verb|\ref{}|”命令同理。
+
+注册商标外面那个R带一个圈可以写为\verb|\textregistered|（注册）或\verb|\texttrademark|（商标），也可以使用\verb|\textcircled{\scriptsize R}|。
 
 为产生目录中的简写形式，可使用\verb|\caption[short text]{long text}|，其中方括号中为简写形式。
 
@@ -69,16 +83,63 @@
 
 为改变输出尺寸，可使用\verb|landscape|宏包。页面布局可使用宏包\verb|typearea|。页面间距可使用\verb|geometry|宏包。
 
-\LaTeX 默认行间距为行高的20\% ，为调整行间距，可使用\verb|setspace|宏包，其具有选项\verb|onehalfspacing|可将行间距调整为1.5倍行高。宏包\verb|parskip|可用于取消\emph{段落}的缩进，此宏包中还包括段落间的距离调整功能。
+
 
 英文中常用到连笔，但有些PDF阅读软件并不支持连笔的搜索和复制，此时可在\verb|microtype|宏包中设置\verb|noligatures|选项来进行取消。
 
 命令\verb|\xspace|可根据不同的情形添加空格：后面跟一个单词时，加入一个空格；如果后面是英文的句号、逗号、叹号和引号则不添加空格。
 
+
+
+\subsection{行间距与段间距}
+
+LaTeX  支持的长度单位有:
+\begin{itemize}
+	\item in - 英寸(inch)(
+	\item mm - 毫米(millimeters)
+	\item cm - 厘米(centimeters)
+	\item pt - points (大约 $1/72$ inch)
+	\item em - 接近当前字体的字符 "M"的宽度(approximately the width of an "M" in the current font)
+	\item ex - 接近当前字体的字符 "x"的高度approximately the height of an "x" in the current font
+\end{itemize}
+长度也可以是负值, 例如  -1.5em.  注意到数字 0 本身不是一个长度,  必须表明是0in 或 0pt 等.
+
+\LaTeX 默认行间距为行高的20\% ，为调整行间距，可使用\verb|setspace|宏包，其具有选项\verb|onehalfspacing|可将行间距调整为1.5倍行高。宏包\verb|parskip|可用于取消\emph{段落}的缩进，此宏包中还包括段落间的距离调整功能。
+
+段落间距有关变量：
+\begin{itemize}
+	\item \verb|\baselineskip|：行基线间距。
+	\item \verb|\lineskip|  ：行间距。
+	\item \verb|\baselinestretch|：伸展因子。
+	\item \verb|\parskip|：部分段间距。
+	\item \verb|\lineskiplimit|：当两行字之间的距离小于\verb|\lineskiplimit|时，行距自动设为\verb|\lineskip|。
+\end{itemize}
+其中段间距等于\verb|\lineskip| + \verb|\parskip|，行间距等于\verb|\lineskip| = \verb|\baselineskip| 乘以 \verb|\baselinestretch|
+
+一般在中文文章中，将 \verb|\parskip| 设置为 0pt，即行间距和段间距相等。设置伸展因子调整行距比较不靠谱，因为经常调不对，索性直接通过 \verb|\fontsize| 直接调 \verb|\baselineskip|，使得 \verb|\baselinestretch| 一直是1，倒来的精确。通过设置伸展因子调整行距不靠谱的原因是默认的 \verb|\baselineskip| 大于字体大小，因此如果你伸展因子设置为 1.5，则实际得出的行距要大于 1.5 倍行距，示例如下：
+\begin{lstlisting}
+\renewcommand{\baselinestretch}{xx}：设置伸展因子。
+\renewcommand{\baselinestretch}{1.5} \normalsize：不改变字体大小，只改变行距。
+\end{lstlisting}
+
+通过在源文件中输入 \verb|\showthe\baselineskip|，可以在编译时得到当前的\verb|\baselineskip|的值，并显示出来（在编译时会停住，显示 \verb|\baselineskip| 的值）
+
+\subsection{对齐}
+一行对齐：\verb|\leftline{左对齐}| \verb|\centerline{居中}| \verb|\rightline{右对齐}|
+
+多行或者段落对齐：
+\begin{itemize}
+	\item 左对齐 \verb|\begin{flushleft}...\end{flushleft}|
+	\item 居中 \verb|\begin{center}...\end{center}|
+	\item 右对齐 \verb|\begin{flushright}...\end{flushright}|
+\end{itemize}
+
 \subsection{页眉页脚}
 普通的页眉页脚可以使用\verb|\pagestyle{plain}|或\verb|\pagestyle{headings}|，前者不产生页眉页脚，后者产生普通的页眉页脚。
 
 为产生更丰富形式的页眉页脚，可使用fancyhdr宏包来定制，引入宏包后使用\verb|\pagestyle{fancy}|来定制具体的格式。
+
+使用中发现footnote会被分页，可以在某处添加\verb|\interfootnotelinepenalty=10000|来禁止。
 
 \subsection{字体}
 使用命令\verb|\sffamily|可将当前字符的字体切换为无衬线字体。
@@ -111,6 +172,29 @@
 \caption{希腊字母的命令表示。}\label{fig:greeks}
 \end{figure}
 
+\subsection{列表环境}
+类型有三种：itemize，enumerate和description。
+
+默认的列表环境空白较大，如果需要更紧凑的列表方式，可以选用 mdwlist 宏包提供的 \verb|itemize*|、\verb|enumerate*| 和 \verb|description*| 环境，用法和无星号的版本一致。
+
+在列表的内部，很容易改变一些距离
+\begin{lstlisting}
+\begin{itemize}
+ \setlength{\itemsep}{1pt}
+ \setlength{\parskip}{0pt}
+ \setlength{\parsep}{0pt}
+ \item first item
+ \item second item
+\end{itemize}
+\end{lstlisting}
+
+枚举的列表计数可以通过其计数器来改变。enumerate 提供了四个计数器 enumi，enumii，enumiii， enumiv 对应不同层次的枚举。下面的示例会产生第5个计数：
+\begin{lstlisting}
+\begin{enumerate}
+ \setcounter{enumi}{4}
+ \item fifth element
+\end{enumerate}
+\end{lstlisting}
 
 \subsection{表格排版}
 表格的多列示例：
@@ -118,6 +202,10 @@
 \multirow{number of rows}{width}{entry text}
 \multicolumn{number of columns}{formatting options}{entry text}
 \end{verbatim}
+
+如果想让标题放在表格的上方就把caption加在\verb|\begin{table}|和\verb|\begin{tabular}|之间，如果想把标题放在表格下方，就把caption放在\verb|\end{table}|和\verb|\end{tabular}|之间。
+
+想在表格下方加以段话的话，就在\verb|\end{tabular}|和\verb|\end{table}|直接加一句话，有时候要用\verb|\newline|，有时候不用。但加的这段注释有时候是doublespace的，想变singlespace，加一句\verb|\linespread{1}|就行了。
 
 \subsubsection{彩色表格}
 使用\verb|colortbl|宏包可制作彩色表格，主要使用的命令是\verb|\columncolor|和\verb|rowcolor|，前者给列进行着色，后者给行进行着色。代码如下\footnote{参见\url{http://tex.stackexchange.com/questions/176220/fancy-colored-array-in-latex}}：
@@ -178,6 +266,19 @@
   keepaspectratio]{graph} 
 \end{verbatim}
 
+在 \LaTeX 中，相同文件名加载图片的顺序是：.png .pdf .jpg .mps .jpeg .jbig2 .jb2 .PNG .PDF .JPG .JPEG .JBIG2 .JB2，而这一顺序存储在宏 \verb|\Gin@extensions| 之中。因此，若是在相同目录下同时含有 dummy.png 和 dummy.pdf, 编译引擎将会选择前者（假设支持）。你可以用 \verb|\DeclareGraphicsExtensions| 命令来声明并改变这些扩展名的顺序，比如：
+\begin{verbatim}
+\DeclareGraphicsExtensions{
+    .png,.PNG,%
+    .pdf,.PDF,%
+    .jpg,.mps,.jpeg,.jbig2,.jb2,.JPG,.JPEG,.JBIG2,.JB2}
+\end{verbatim}
+这样就能确保 png 文件在 pdf 文件之前被载入了——在最终输出之时只需要交换两行的顺序即可。另外 grfext 宏包提供了 \verb|\PrependGraphicsExtensions| 命令实现同样的效果：
+\begin{lstlisting}
+\usepackage{grfext}
+\PrependGraphicsExtensions*{.png,.PNG}
+\end{lstlisting}
+
 \subsection{参考文献}
 若某文献标题中含有特定含义大写字母（“SVM” “EM”等），应特别用第二重\verb|{}|将其括起来才可使其正常表示。如，“Title = \verb|{{EM-DD}|: An improved multiple-instance learning technique\verb|}|”。
 
@@ -187,9 +288,80 @@
 \section{\LaTeX 中文排版}
 
 \section{Beamer拾遗}
+演讲时，时不时的总结，简单的重复演讲的主要信息。听众一般会在开头和结尾比较有注意力，总结是传递信息的“第二次机会”。
+
+Beamer中默认使用无衬线字体，显示数学公式时不漂亮，可使用\verb|\usefonttheme[onlymath]{serif} |选择数学模式的字体。
 
 \subsection{插入代码}
 在Beamer中插入代码，应当在frame环境中加入\verb|[fragile]|选项再使用verbatim宏包。
+
+\section{Tikz绘图}
+
+\subsection{思维导图}
+使用以下代码可绘制出思维导图，如图\ref{fig:mindmap}所示：
+\begin{lstlisting}
+\documentclass[tikz]{standalone}
+\usepackage{xcolor}
+\usetikzlibrary{mindmap} %for mindmap
+\definecolor{DeepSkyBlue4}{RGB}{0,104,139}
+\begin{document}
+\tikzstyle{level 2 concept}+=[sibling angle=40]
+\begin{tikzpicture}[scale=0.49, transform shape]
+\path[mindmap,concept color=black,text=white]
+node[concept] {Pure Mathematics} [clockwise from=45]
+child[concept color=DeepSkyBlue4]{
+node[concept] {Analysis} [clockwise from=180]
+child {
+node[concept] {Multivariate \&amp; Vector Calculus}
+[clockwise from=120]
+child {node[concept] {ODEs}}}
+child { node[concept] {Functional Analysis}}
+child { node[concept] {Measure Theory}}
+child { node[concept] {Calculus of Variations}}
+child { node[concept] {Harmonic Analysis}}
+child { node[concept] {Complex Analysis}}
+child { node[concept] {Stochastic Analysis}}
+child { node[concept] {Geometric Analysis}
+[clockwise from=-40]
+child {node[concept] {PDEs}}}}
+child[concept color=black!50!green, grow=-40]{
+node[concept] {Combinatorics} [clockwise from=10]
+child {node[concept] {Enumerative}}
+child {node[concept] {Extremal}}
+child {node[concept] {Graph Theory}}}
+child[concept color=black!25!red, grow=-90]{
+node[concept] {Geometry} [clockwise from=-30]
+child {node[concept] {Convex Geometry}}
+child {node[concept] {Differential Geometry}}
+child {node[concept] {Manifolds}}
+child {node[concept,color=black!50!green!50!red,text=white] {Discrete Geometry}}
+child {
+node[concept] {Topology} [clockwise from=-150]
+child {node [concept,color=black!25!red!50!brown,text=white]
+{Algebraic Topology}}}}
+child[concept color=brown,grow=140]{
+node[concept] {Algebra} [counterclockwise from=70]
+child {node[concept] {Elementary}}
+child {node[concept] {Number Theory}}
+child {node[concept] {Abstract} [clockwise from=180]
+child {node[concept,color=red!25!brown,text=white] {Algebraic Geometry}}}
+child {node[concept] {Linear}}}
+node[extra concept,concept color=black] at (200:5) {Applied Mathematics}
+child[grow=145,concept color=black!50!yellow] {
+node[concept] {Probability} [clockwise from=180]
+child {node[concept] {Stochastic Processes}}}
+child[grow=175,concept color=black!50!yellow] {node[concept] {Statistics}}
+child[grow=205,concept color=black!50!yellow] {node[concept] {Numerical Analysis}}
+child[grow=235,concept color=black!50!yellow] {node[concept] {Symbolic Computation}};
+\end{tikzpicture}
+\end{document}
+\end{lstlisting}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=0.8\linewidth]{mindmap.png}
+	\caption{使用Tikz制作思维导图示例。}\label{fig:mindmap}
+\end{figure}
 
 \section{文档类编写}
 
