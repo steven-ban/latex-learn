@@ -78,6 +78,10 @@ hyperref 非常强大，你可以有非常多的可能性，其中最突出的�
 
 命令\verb|\xspace|可根据不同的情形添加空格：后面跟一个单词时，加入一个空格；如果后面是英文的句号、逗号、叹号和引号则不添加空格。
 
+引入宏包\verb|mhchem|可书写化学式，如\verb|\ce{(NH4}2SO4|。\footnote{参见\url{http://en.wikibooks.org/wiki/File:Ammonium_sulphate_mhchem.png}}
+
+使用\verb|pandoc|可将\TeX 文件转换为各种格式的文档，包括电子书。
+
 
 
 \subsection{行间距与段间距}
@@ -150,6 +154,8 @@ LaTeX  支持的长度单位有:
 \end{description}
 
 其实用来用去才发现，LaTeX自带的这些字体才是真正经过时间和实践检验的经典字体，是TUG智慧的结晶。而且，这150多种字体也涵盖了绝大部分（LaTeX能触及到的）字体使用领域。这是不应该被遗忘的宝藏。
+
+在linux下，可安装\verb|poppler-utils|程序并采用\verb|pdffonts dox.pdf|命令来查看PDF文件中的字体。
 
 \subsection{数学公式排版}
 文中，特别是在equation环境下，如果要插入公式，则公式后一定要有标点“逗号”或“句号”。使用方法：在公式后加入“\verb|\,,|”（逗号）或“\verb|\,.|”（句号）即可。不推荐使用\verb|\text{,}|或\verb|\text{.}|。因为\verb|\text{}|环境下的标点长相与“\verb|\,,|”或“\verb|\,.|”不同，且“\verb|\,,|”或“\verb|\,.|”前会自动与公式隔出一段距离，更加正式、美观。
@@ -293,6 +299,9 @@ LaTeX  支持的长度单位有:
 可以直接使用\verb|\verb||code|来使用latex中的代码，或通过verbatim环境。
 
 \section{\LaTeX 中文排版}
+
+\subsection{中文字体}
+
 
 \section{Beamer拾遗}
 演讲时，时不时的总结，简单的重复演讲的主要信息。听众一般会在开头和结尾比较有注意力，总结是传递信息的“第二次机会”。
