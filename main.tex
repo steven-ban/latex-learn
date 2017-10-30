@@ -295,6 +295,24 @@ LaTeX  支持的长度单位有:
 \subsection{参考文献}
 若某文献标题中含有特定含义大写字母（“SVM” “EM”等），应特别用第二重\verb|{}|将其括起来才可使其正常表示。如，“Title = \verb|{{EM-DD}|: An improved multiple-instance learning technique\verb|}|”。
 
+为方便管理和引用参考文献，可采用bibtex，首先是将\verb|.bib|文件放入主文件夹，然后在正文中引入参考文献名称：
+\begin{lstlisting}
+\bibliographstyle{plain}
+\bibliography{filename.bib}
+\end{lstlisting}
+在需要引入参考文献的地方使用\verb|\cite{cite1}|，其中\verb|cite1|是\verb|filename.bib|文件中的参考文献标识，然后采用如下顺序编译文件：
+\begin{lstlisting}
+$ xelatex test.tex
+$ bibtex test.tex
+$ xelatex test.tex
+$ xelatex test.tex
+\end{lstlisting}
+就能得到编译好的文件了。注意：如果一个文件中包含了多个其他的tex文件，在用bibtex进行编译时，应该逐个编译每个被包含的源文件。
+
+一般的期刊数据库中均可以导出bib文件，其格式是固定的。如果bib文件太多，可通过JabRef软件来管理。JabRef可实现全文文献自动关联的功能，即文献字段中有一个\verb|Bib Textkey|可将每篇文献自动生成唯一的域名从而实现自动关联。
+
+在一个文档中多次使用bib文件，如此使用参考文献的情况不多，但是有时也有类似的场合需要这样使用，推荐给各位这一个包：multibib。
+
 \subsection{插入代码}
 可以直接使用\verb|\verb||code|来使用latex中的代码，或通过verbatim环境。
 
