@@ -1,5 +1,6 @@
-\documentclass[11pt]{ctexart}
+\documentclass[linespread=1.5]{ctexart}
 
+\newfontfamily\code{Courier New}
 
 \usepackage[margin=2cm]{geometry}
 
@@ -8,13 +9,15 @@
 \usepackage{listings}
 \lstset{
 	numbers=left,
-	numberstyle=\tiny,
+	numberstyle=\tiny\code,
 	basicstyle=\small,
+	frame=lines,
 	keywordstyle=\color{red},
 	identifierstyle=,
 	commentstyle=color{grey},
-	stringstyle=\ttfamily,
-	showstringspaces=false
+	stringstyle=\code,
+	showstringspaces=false,
+	language=tex
 }
 
 \usepackage{url}
@@ -319,7 +322,7 @@ $ xelatex test.tex
 \section{\LaTeX 中文排版}
 \LaTeX 是老外写的，并未考虑中文的排版。90年代后期以来，陆续出现了CCT等中文排版方式，但由于用的人少同时标准不统一，技术落后，一直没有特别好的解决方式。中文的排版一方面是字体，另一方面是中文对断行、缩进等特殊的排版需求。对前者而言，由于\LaTeX 的字体机制与Microsoft Office不同，需要手动生成相应的字体文件，既不方便，体积又大，让初学者望而却步。后来，刘海洋等人基于Xe\LaTeX 开发完成了CTeX，完美解决了中文排版问题。目前（2017年），\CTeX 已经非常成熟，装好\TeX Live后开箱可用，大大方便了中文排版，以往的技术（包括Xe\LaTeX 与xunicode、fontspec宏包的搭配）统统可以抛弃了。
 
-\CTeX 宏包包括提供的文档类及宏包，其中文档类包括\verb|ctexart.cls|、\verb|ctexrep.cls|和\verb|ctexbook.cls|，分别替代了\LaTeX 标准文档类\verb|article.cls|、\verb|report.cls|和\verb|book.cls|。宏包方面，\verb|ctex.sty|提供该宏包的全部功能，但默认不开启章节标题设置功能，需要使用\verb|heading|选项来开启。\verb|ctex.sty|可在其他文档类（如\verb|beamer|、\verb|moderncv|）中使用以提供完整的中文支持功能。
+\CTeX 宏包包括提供的文档类及宏包，其中文档类包括\verb|ctexart.cls|、\verb|ctexrep.cls|和\verb|ctexbook.cls|，分别替代了\LaTeX 标准文档类\verb|article.cls|、\verb|report.cls|和\verb|book.cls|。宏包方面，\verb|ctex.sty|提供该宏包的全部功能，但默认不开启章节标题设置功能，需要使用\verb|heading|选项来开启。\verb|ctex.sty|可在其他文档类（如\verb|beamer|、\verb|moderncv|）中使用以提供完整的中文支持功能。在2017年，还增加了\verb|ctexbeamer.cls|。
 
 \CTeX 中使用\verb|\ctexset{}|来设置相应的选项，具体参见说明文档。
 
