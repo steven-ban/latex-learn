@@ -1,0 +1,34 @@
+\section{字体}
+\subsection{涉及字体的几个文件}
+
+以下几个文件涉及字体配置，可参考\url{http://liam0205.me/2016/12/11/LaTeX-traditional-font-scheme/}\footnote{译自\url{http://tex.stackexchange.com/a/119501/38350}}：
+\begin{itemize}
+	\item .def文件
+	\item .fd文件 
+	\item .vf文件
+	\item .tfm文件
+	\item .map文件
+	\item .pfb文件
+\end{itemize}
+
+使用命令\verb|\sffamily|可将当前字符的字体切换为无衬线字体。
+
+早就有人写了完整的LaTeX字体巡礼：\url{http://www.tug.dk/FontCatalogue/ }，这个网站罗列了156个LaTeX中可以免费使用的字体，并且给出了例子和调用的源代码，需要注意的是这些字体并非默认安装在机器上，但至少都能从CTAN得到——不光是宏包，还有字体文件（因为像winfonts，MinionPro这些宏包需要用户自己拥有相应的字体，CTAN上并没有）。 
+
+推荐一下几个字体/字体包：
+\begin{description}
+	\item[Palatino] Will Robertson的文档总是用Palatino，这字体的名气也不小。胖胖的很活泼，笔锋也优雅，有羽毛笔的进化痕迹。LaTeX中最省事的是用 \verb|\usepackage{mathpazo}| 来统一修改正文和数学字体，这个宏包还有 \verb|[sc, osf]| 参数，分别对应小大写字母和不齐线数字。此外还有一个palatinox宏包可以直接调用Windows系统中的Palatino Linotype（这是微软认证发布赫尔曼·察普夫的原作），相关网址是：\url{http://www.ctan.org/tex-archive/fonts/truetypemetrics/palatinox/}，需要手动安装。在这个URL的上一层还能看到另一个经典字体frutiger，只是我手头没有Linotype Frutiger。 
+	\item[Garamond] 1530年诞生的经典字体，LaTeX中通过mathdesign可以使用： \verb|\usepackage[garamond]{mathdesign}| 来使用。Garamond字体十分大气，打印在纸张上也特别好看，法国很多口袋图书用的是Garamond。 需要注意的是虽说免费，URW的garamond字体在默认安装的发行版中可能不存在，但是可以下载到，例如\url{http://ctan.binkerton.com/nonfree/fonts/urw/garamond/ }下载所有pfb文件：ugmr8a.pfb ugmri8a.pfb ugmm8a.pfb ugmmi8a.pfb 放到 \verb|font\type1\| 里面的某个目录后刷新数据库即可 
+	\item[Times] 除了 \verb|\usepackage{times}| 外，\verb|\usepackage{mathptmx}| 可以把数学字体也改成类似Times的字体。这个字体真的不需要再多说什么了，总之我觉得看久了眼睛会累，但是打印的效果非常稳妥。
+	\item[Utopia] Utopia有点像Times，但更宽敞一些。\verb|\usepackage{fourier}| 统一修改正文和数学字体为Utopia， \verb|\usepackage[adobe-utopia]{mathdesign}| 则是mathdesign的调用方法，差别不太明显。
+	\item[Avant Garde/Courier/Bookman/New Century Schoolbook] 
+不是我懒，这几个字体在PSNFSS中是可以搭配着用的：\verb|\usepackage{avant}| 只载入Avant Garde，\verb|\usepackage{bookman}| 则同时载入Bookman(衬线)，Avant Garde(无衬线)和Courier(等宽)字体，\verb|\usepackage{newcent}| 同时载入New Century Schoolbook(衬线)，Avant Garde(无衬线)和Courier(等宽)字体 
+	\item[Charter] 十分饱满的衬线字体，适合屏幕阅读。\verb|\usepackage{charter}|
+	\item[Helvetica/Optima] 这两个字体放一块是因为我觉得它们是无衬线字体，比较适合用来作幻灯片。Helvetica可以 \verb|\usepackage{helvet}| ， Optima没有写成宏包的形式，就可以用 \verb|\renewcommand{\sfdefault}{uop}| ，然后 \verb|\renewcommand*\familydefault{\sfdefault}| 来调用。在幻灯片这样的尺寸上，Optima变化的线宽才显现出优美来。 （不过beamer的作者认为Optima不适合做幻灯片）
+	\item[其他] 建议看看\url{ftp://tug.ctan.org/pub/tex-archi … t_Survey/survey.pdf} 这篇文章，介绍得相当详细，而且有效果图展示。 
+	\item[Minion Pro] \url{http://tug.ctan.org/tex-archive/fonts/minionpro/} 有详细的安装说明，只要不出错是肯定能安上的，装了Acrobat Reader 7.0以上的用户都能在Acrobat安装目录下找到 MinionPro-Bold.otf , MinionPro-BoldIT.otf , MinionPro-It.otf , MinionPro-Regular.otf 这四个文件，按照安装说明拆解它们四个已经能满足日常文档的需要。此外，MnSymbol宏包（MiKTeX可以自动安装）是配合Minion Pro的数学宏包，最好装上，不过 \verb|\usepackage{MinionPro}| 就够了，会自动载入MnSymbol宏包。
+\end{description}
+
+其实用来用去才发现，LaTeX自带的这些字体才是真正经过时间和实践检验的经典字体，是TUG智慧的结晶。而且，这150多种字体也涵盖了绝大部分（LaTeX能触及到的）字体使用领域。这是不应该被遗忘的宝藏。
+
+在linux下，可安装\verb|poppler-utils|程序并采用\verb|pdffonts dox.pdf|命令来查看PDF文件中的字体。

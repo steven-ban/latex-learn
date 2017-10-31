@@ -3,6 +3,7 @@
 \newfontfamily\code{Courier New}
 
 \usepackage[margin=2cm]{geometry}
+\usepackage{mdwlist}
 
 \usepackage{graphicx}
 
@@ -10,7 +11,7 @@
 \lstset{
 	numbers=left,
 	numberstyle=\tiny\code,
-	basicstyle=\small,
+	basicstyle=\small\ttfamily,
 	frame=lines,
 	keywordstyle=\color{red},
 	identifierstyle=,
@@ -63,6 +64,18 @@ hyperref 非常强大，你可以有非常多的可能性，其中最突出的�
 
 文中在引用参考文献时要用“\~{}”（而不是直接空格）来产生空格。例如，“state-of-the-art MIL algorithms, e.g., miFV\~{}\verb|\cite{bibmiFV}| and miGraph\~{}\verb|\cite{bibmiGraph}|, and …” 用“\~{}”来产生空格的好处是使得“miFV [5]”作为一个整体，在换行时不会发生“[5]”与前文分开而单独处于行首的错误情况。“\~{}\verb|\ref{}|”命令同理。
 
+几种分隔方式：
+\begin{description*}
+	\item[$\backslash \backslash$ \it{offset} ] 换行，并且与下一行的行间距为原来行间距+offset。
+	\item[$\backslash$ newline] 与\verb|\\|相同。
+	\item[$\backslash$ linebreak] 强制换行，与\verb|\newline|的区别为\verb|\linebreak|的当前行分散对齐。
+	\item[$\backslash$ par] 分段。
+\end{description*}
+
+\verb|\newpage|分页命令，\verb|\clearpage|和 \verb|\newpage| 类似。
+
+如果想要首行缩进两个汉字距离，则\verb|\setlength{\parindent}{2em}|。
+
 注册商标外面那个R带一个圈可以写为\verb|\textregistered|（注册）或\verb|\texttrademark|（商标），也可以使用\verb|\textcircled{\scriptsize R}|。
 
 为产生目录中的简写形式，可使用\verb|\caption[short text]{long text}|，其中方括号中为简写形式。
@@ -90,26 +103,26 @@ hyperref 非常强大，你可以有非常多的可能性，其中最突出的�
 \subsection{行间距与段间距}
 
 LaTeX  支持的长度单位有:
-\begin{itemize}
-	\item in - 英寸(inch)(
+\begin{itemize*}
+	\item in - 英寸(inch)
 	\item mm - 毫米(millimeters)
 	\item cm - 厘米(centimeters)
 	\item pt - points (大约 $1/72$ inch)
 	\item em - 接近当前字体的字符 "M"的宽度(approximately the width of an "M" in the current font)
 	\item ex - 接近当前字体的字符 "x"的高度approximately the height of an "x" in the current font
-\end{itemize}
+\end{itemize*}
 长度也可以是负值, 例如  -1.5em.  注意到数字 0 本身不是一个长度,  必须表明是0in 或 0pt 等.
 
 \LaTeX 默认行间距为行高的20\% ，为调整行间距，可使用\verb|setspace|宏包，其具有选项\verb|onehalfspacing|可将行间距调整为1.5倍行高。宏包\verb|parskip|可用于取消\emph{段落}的缩进，此宏包中还包括段落间的距离调整功能。
 
 段落间距有关变量：
-\begin{itemize}
+\begin{itemize*}
 	\item \verb|\baselineskip|：行基线间距。
 	\item \verb|\lineskip|  ：行间距。
 	\item \verb|\baselinestretch|：伸展因子。
 	\item \verb|\parskip|：部分段间距。
 	\item \verb|\lineskiplimit|：当两行字之间的距离小于\verb|\lineskiplimit|时，行距自动设为\verb|\lineskip|。
-\end{itemize}
+\end{itemize*}
 其中段间距等于\verb|\lineskip| + \verb|\parskip|，行间距等于\verb|\lineskip| = \verb|\baselineskip| 乘以 \verb|\baselinestretch|
 
 一般在中文文章中，将 \verb|\parskip| 设置为 0pt，即行间距和段间距相等。设置伸展因子调整行距比较不靠谱，因为经常调不对，索性直接通过 \verb|\fontsize| 直接调 \verb|\baselineskip|，使得 \verb|\baselinestretch| 一直是1，倒来的精确。通过设置伸展因子调整行距不靠谱的原因是默认的 \verb|\baselineskip| 大于字体大小，因此如果你伸展因子设置为 1.5，则实际得出的行距要大于 1.5 倍行距，示例如下：
@@ -137,31 +150,12 @@ LaTeX  支持的长度单位有:
 
 使用中发现footnote会被分页，可以在某处添加\verb|\interfootnotelinepenalty=10000|来禁止。
 
-\subsection{字体}
-使用命令\verb|\sffamily|可将当前字符的字体切换为无衬线字体。
 
-早就有人写了完整的LaTeX字体巡礼：\url{http://www.tug.dk/FontCatalogue/ }，这个网站罗列了156个LaTeX中可以免费使用的字体，并且给出了例子和调用的源代码，需要注意的是这些字体并非默认安装在机器上，但至少都能从CTAN得到——不光是宏包，还有字体文件（因为像winfonts，MinionPro这些宏包需要用户自己拥有相应的字体，CTAN上并没有）。 
-
-推荐一下几个字体/字体包：
-\begin{description}
-	\item[Palatino] Will Robertson的文档总是用Palatino，这字体的名气也不小。胖胖的很活泼，笔锋也优雅，有羽毛笔的进化痕迹。LaTeX中最省事的是用 \verb|\usepackage{mathpazo}| 来统一修改正文和数学字体，这个宏包还有 \verb|[sc, osf]| 参数，分别对应小大写字母和不齐线数字。此外还有一个palatinox宏包可以直接调用Windows系统中的Palatino Linotype（这是微软认证发布赫尔曼·察普夫的原作），相关网址是：\url{http://www.ctan.org/tex-archive/fonts/truetypemetrics/palatinox/}，需要手动安装。在这个URL的上一层还能看到另一个经典字体frutiger，只是我手头没有Linotype Frutiger。 
-	\item[Garamond] 1530年诞生的经典字体，LaTeX中通过mathdesign可以使用： \verb|\usepackage[garamond]{mathdesign}| 来使用。Garamond字体十分大气，打印在纸张上也特别好看，法国很多口袋图书用的是Garamond。 需要注意的是虽说免费，URW的garamond字体在默认安装的发行版中可能不存在，但是可以下载到，例如\url{http://ctan.binkerton.com/nonfree/fonts/urw/garamond/ }下载所有pfb文件：ugmr8a.pfb ugmri8a.pfb ugmm8a.pfb ugmmi8a.pfb 放到 \verb|font\type1\| 里面的某个目录后刷新数据库即可 
-	\item[Times] 除了 \verb|\usepackage{times}| 外，\verb|\usepackage{mathptmx}| 可以把数学字体也改成类似Times的字体。这个字体真的不需要再多说什么了，总之我觉得看久了眼睛会累，但是打印的效果非常稳妥。
-	\item[Utopia] Utopia有点像Times，但更宽敞一些。\verb|\usepackage{fourier}| 统一修改正文和数学字体为Utopia， \verb|\usepackage[adobe-utopia]{mathdesign}| 则是mathdesign的调用方法，差别不太明显。
-	\item[Avant Garde/Courier/Bookman/New Century Schoolbook] 
-不是我懒，这几个字体在PSNFSS中是可以搭配着用的：\verb|\usepackage{avant}| 只载入Avant Garde，\verb|\usepackage{bookman}| 则同时载入Bookman(衬线)，Avant Garde(无衬线)和Courier(等宽)字体，\verb|\usepackage{newcent}| 同时载入New Century Schoolbook(衬线)，Avant Garde(无衬线)和Courier(等宽)字体 
-	\item[Charter] 十分饱满的衬线字体，适合屏幕阅读。\verb|\usepackage{charter}|
-	\item[Helvetica/Optima] 这两个字体放一块是因为我觉得它们是无衬线字体，比较适合用来作幻灯片。Helvetica可以 \verb|\usepackage{helvet}| ， Optima没有写成宏包的形式，就可以用 \verb|\renewcommand{\sfdefault}{uop}| ，然后 \verb|\renewcommand*\familydefault{\sfdefault}| 来调用。在幻灯片这样的尺寸上，Optima变化的线宽才显现出优美来。 （不过beamer的作者认为Optima不适合做幻灯片）
-	\item[其他] 建议看看\url{ftp://tug.ctan.org/pub/tex-archi … t_Survey/survey.pdf} 这篇文章，介绍得相当详细，而且有效果图展示。 
-	\item[Minion Pro] \url{http://tug.ctan.org/tex-archive/fonts/minionpro/} 有详细的安装说明，只要不出错是肯定能安上的，装了Acrobat Reader 7.0以上的用户都能在Acrobat安装目录下找到 MinionPro-Bold.otf , MinionPro-BoldIT.otf , MinionPro-It.otf , MinionPro-Regular.otf 这四个文件，按照安装说明拆解它们四个已经能满足日常文档的需要。此外，MnSymbol宏包（MiKTeX可以自动安装）是配合Minion Pro的数学宏包，最好装上，不过 \verb|\usepackage{MinionPro}| 就够了，会自动载入MnSymbol宏包。
-\end{description}
-
-其实用来用去才发现，LaTeX自带的这些字体才是真正经过时间和实践检验的经典字体，是TUG智慧的结晶。而且，这150多种字体也涵盖了绝大部分（LaTeX能触及到的）字体使用领域。这是不应该被遗忘的宝藏。
-
-在linux下，可安装\verb|poppler-utils|程序并采用\verb|pdffonts dox.pdf|命令来查看PDF文件中的字体。
 
 \subsection{数学公式排版}
 文中，特别是在equation环境下，如果要插入公式，则公式后一定要有标点“逗号”或“句号”。使用方法：在公式后加入“\verb|\,,|”（逗号）或“\verb|\,.|”（句号）即可。不推荐使用\verb|\text{,}|或\verb|\text{.}|。因为\verb|\text{}|环境下的标点长相与“\verb|\,,|”或“\verb|\,.|”不同，且“\verb|\,,|”或“\verb|\,.|”前会自动与公式隔出一段距离，更加正式、美观。
+
+行内高度会压缩的分数\verb|\frac|不太好看，一般用\verb|\dfrac|替换。
 
 公式中的\verb|\ldots|和\verb|\cdots|。“\verb|\ldots|”是列举中的省略符号，而“\verb|\cdots|”用于运算（如连加、连乘等）中的省略，二者主要区别在于位置一高一低，切勿混用。
 
@@ -188,8 +182,42 @@ LaTeX  支持的长度单位有:
 \caption{希腊字母的命令表示。}\label{fig:greeks}
 \end{figure}
 
+使用\verb|\boldmath|命令可切换数学模式下的粗体。宏包bm是专门用来处理数学粗体的，使用\verb|\bm|命令进行切换。然而，上述方式中可能会出现伪粗体，降低了排版的专利性和美观性，因此应尽量选择字重齐全的字体，如newtxmath、stix、pxfonts、mathdesign（只包含符号）、MnSymbol（只包含符号）、fdsymbol（只包含符号）、lucidabr（商业字体）。具体情形参考\url{https://www.zhihu.com/question/25290041}。
+
+
+\LaTeX 环境下，最重要的数学宏包是AMS系列的。首先是这些主要提供环境的包：
+\begin{itemize}
+	\item amsmath，最基本的数学包
+	\item amscd，绘制交换图
+	\item amsthm，制作引理
+	\item amsxtra，对于旧式数学式的支持
+	\item upref，Roman体的\verb|\ref|输出
+\end{itemize}
+下面是提供字体的包：
+\begin{itemize}
+	\item amsfont，定义了\verb|\mathfrak|和\verb|\mathbb|，另有诸多符号
+	\item amssymb，另一个定义了诸多符号的包
+	\item eufrak，Euler Fraktur
+	\item eucal，定义了Euler字体版本的\verb|\mathcal|
+\end{itemize}
+对于AMS-Math，需要掌握下面最基本的几个环境：
+\begin{itemize}
+	\item equation equation* 单行单公式
+	\item multline multline* 多行公式，没有对齐操作，只给一个公式编号
+	\item gather gather* 多个公式，可添加多个公式编号
+	\item align align* 多个公式对齐，但只能对齐公式内部的一个部分
+	\item flalign flalign* 多个公式对齐，可对公式内的多个部分
+	\item split 分割公式
+	\item gathered 和gather的区别是放在了一个minipage里
+	\item aligned 也是minipage的问题
+\end{itemize}
+注意：\emph{方程组不要用eqnarray，而要用align}，因为前者用两个\verb|&|对齐，对齐时的位置空格偏大，后者用一个\verb|&|对齐，间距比较自然。
+
+数学模式下涉及大量专有符号，可参考The LaTeX Companion或在TexDoc下搜索symbol。
+
+
 \subsection{列表环境}
-类型有三种：itemize，enumerate和description。
+类型有三种：itemize，enumerate和description，均基于list环境。
 
 默认的列表环境空白较大，如果需要更紧凑的列表方式，可以选用 mdwlist 宏包提供的 \verb|itemize*|、\verb|enumerate*| 和 \verb|description*| 环境，用法和无星号的版本一致。
 
@@ -212,16 +240,43 @@ LaTeX  支持的长度单位有:
 \end{enumerate}
 \end{lstlisting}
 
+enumberate宏包为\verb|enumberate|提供了更灵活的标签，如：
+\begin{lstlisting}
+usepackage{enumerate}
+
+\begin{enumerate}[(i)]
+ \item The first item
+ \item The second item
+ \item The third etc \ldots
+\end{enumerate}
+\end{lstlisting}
+
+paralist 宏包提供了 \verb|inparaenum| 环境，产生不分段的列表。同样支持跟上面 enumerate 宏包类似的格式化标签。
+
+
 \subsection{表格排版}
+\subsubsection{多列}
 表格的多列示例：
 \begin{verbatim}
 \multirow{number of rows}{width}{entry text}
 \multicolumn{number of columns}{formatting options}{entry text}
 \end{verbatim}
 
+\subsubsection{表格内文字}
+
 如果想让标题放在表格的上方就把caption加在\verb|\begin{table}|和\verb|\begin{tabular}|之间，如果想把标题放在表格下方，就把caption放在\verb|\end{table}|和\verb|\end{tabular}|之间。
 
 想在表格下方加以段话的话，就在\verb|\end{tabular}|和\verb|\end{table}|直接加一句话，有时候要用\verb|\newline|，有时候不用。但加的这段注释有时候是doublespace的，想变singlespace，加一句\verb|\linespread{1}|就行了。
+
+\subsubsection{如何防止表格过宽？}
+\LaTeX 中表格宽度需要手工输入尺寸来控制，往往会越过边界线。如果编译后出现了这些情况，应该如何解决呢？
+\begin{itemize}
+	\item 使用更小的字体，如\verb|\small{\begin{tabular}...\end{tabular}}|
+	\item 手动控制宽度
+	\item 使用宏包makecell
+	\item 使用宏包tabularx来自动改变列宽
+	\item 使用rotating宏包中的sidewaystable宏包
+\end{itemize}
 
 \subsubsection{彩色表格}
 使用\verb|colortbl|宏包可制作彩色表格，主要使用的命令是\verb|\columncolor|和\verb|rowcolor|，前者给列进行着色，后者给行进行着色。代码如下\footnote{参见\url{http://tex.stackexchange.com/questions/176220/fancy-colored-array-in-latex}}：
@@ -268,6 +323,10 @@ LaTeX  支持的长度单位有:
 \caption{彩色表格示例。}\label{fig:colortbl}
 \end{figure}
 
+\subsubsection{从外部文件读入表格数据}
+有时需要从外部文件中读入大量表格数据，此时手工填写过于繁琐，而在存在外部文件的情况下，是可以直接读取的，方式是使用databool宏包，具体参见\url{http://uweziegenhagen.de/?p=3100}。
+
+
 
 \subsection{插图排版}
 若文章需要插入很多图片，那么直接和\verb|“.tex”|放在一起就会很杂乱。这时可在\verb|”.tex”|所在目录下新建名为“figure”的文件夹，将图片放入figure文件夹后调用\verb|\graphicspath{{figure/}}|命令即可。
@@ -295,6 +354,21 @@ LaTeX  支持的长度单位有:
 \PrependGraphicsExtensions*{.png,.PNG}
 \end{lstlisting}
 
+在某些情况下，可能需要将多个图并列为一组，而对每幅图均保持独立性，此时可使用\verb|paisubfigure|中的\verb|\subfigure|命令，如下示例：
+\begin{lstlisting}
+\begin{figure}
+   \centering   
+	\subfigure[Small Box with a Long Caption]{
+     \label{fig:subfig:a} %% label for first subfigure     
+	\includegraphics[width=1.0in]{graphic.eps}}   
+	\hspace{1in}   
+	\subfigure[Big Box]{     
+	\label{fig:subfig:b} %% label for second subfigure     
+	\includegraphics[width=1.5in]{graphic.eps}}   
+	\caption{Two Subfigures}   
+\label{fig:subfig} %% label for entire figure \end{figure}
+\end{lstlisting}
+
 \subsection{参考文献}
 若某文献标题中含有特定含义大写字母（“SVM” “EM”等），应特别用第二重\verb|{}|将其括起来才可使其正常表示。如，“Title = \verb|{{EM-DD}|: An improved multiple-instance learning technique\verb|}|”。
 
@@ -318,6 +392,8 @@ $ xelatex test.tex
 
 \subsection{插入代码}
 可以直接使用\verb|\verb||code|来使用latex中的代码，或通过verbatim环境。
+
+\input{font.tex}
 
 \section{\LaTeX 中文排版}
 \LaTeX 是老外写的，并未考虑中文的排版。90年代后期以来，陆续出现了CCT等中文排版方式，但由于用的人少同时标准不统一，技术落后，一直没有特别好的解决方式。中文的排版一方面是字体，另一方面是中文对断行、缩进等特殊的排版需求。对前者而言，由于\LaTeX 的字体机制与Microsoft Office不同，需要手动生成相应的字体文件，既不方便，体积又大，让初学者望而却步。后来，刘海洋等人基于Xe\LaTeX 开发完成了CTeX，完美解决了中文排版问题。目前（2017年），\CTeX 已经非常成熟，装好\TeX Live后开箱可用，大大方便了中文排版，以往的技术（包括Xe\LaTeX 与xunicode、fontspec宏包的搭配）统统可以抛弃了。
@@ -373,6 +449,7 @@ Beamer中默认使用无衬线字体，显示数学公式时不漂亮，可使�
 在Beamer中插入代码，应当在frame环境中加入\verb|[fragile]|选项再使用verbatim宏包。
 
 \section{Tikz绘图}
+Tikz是专业的矢量图工具，但学习成本比较高，我虽然看过文档，但并不熟练。替代的方式是，使用第三方矢量图软件（如Libre Office Draw或Dia）先做出图，再导出为\TeX 格式即可。
 
 \subsection{思维导图}
 使用以下代码可绘制出思维导图，如图\ref{fig:mindmap}所示：
@@ -440,7 +517,8 @@ child[grow=235,concept color=black!50!yellow] {node[concept] {Symbolic Computati
 	\caption{使用Tikz制作思维导图示例。}\label{fig:mindmap}
 \end{figure}
 
-\section{文档类编写}
+\input{class.tex}
+
 
 \section{总结}
 

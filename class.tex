@@ -1,0 +1,21 @@
+\section{文档类编写与个人文档订制}
+我试图编写自己的文档类，但重复造轮子的效果并不比其他宏包好，因此放弃了学习文档类编写的努力。
+
+
+
+很多网上的文档类是\verb|.dtx|格式，这是doc类文档生成的，执行同目录下\verb|latex test.ins|就会对|test.dtx|进行解析，得到相应的文档类文件，引用这个文档类即可进行编写。
+
+虽然\CTeX 中自定义了常用的中文图表和章节格式，但有时可能需要自己重新定义，方法是：
+\begin{lstlisting}
+\renewcommand\contentsname{目录} 
+\renewcommand\listfigurename{插图目录} 
+\renewcommand\listtablename{表格目录} 
+\renewcommand\refname{参考文献} 
+\renewcommand\indexname{索引} 
+\renewcommand\figurename{图} 
+\renewcommand\tablename{表} 
+\renewcommand\abstractname{摘要} 
+\renewcommand\partname{部分} 
+\renewcommand\appendixname{附录} 
+\renewcommand\today{\number\year年\number\month月\number\day日} 
+\end{lstlisting}
